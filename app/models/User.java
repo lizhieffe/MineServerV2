@@ -2,10 +2,10 @@ package models;
 
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 
@@ -34,13 +34,14 @@ public class User extends Model {
 	
 	public Integer birthday;
 	
+	public String password;
+	
 	public Long spouseUserId;
 	
-	@OneToOne(fetch=FetchType.LAZY)
-	@JoinColumn(name="user_credential_id")
-	public UserCredential credential;
+//	@OneToOne(mappedBy="user", cascade=CascadeType.ALL)
+//	public UserCredential credential;
 	
-	@OneToMany(fetch=FetchType.LAZY)
+	@OneToMany(fetch=FetchType.EAGER)
 	public List<Transaction> transactions;
 	
 	public static User createUser(String username, String password, String lastName, String firstName, String gender) {
@@ -50,8 +51,7 @@ public class User extends Model {
 		user.lastName = lastName;
 		user.firstName = firstName;
 		user.gender = gender.equalsIgnoreCase("m") ? true : false;
-		UserCredential credential = UserCredential.createUserCredential(password);
-		user.credential = credential;
+		user.password = password;
 		Ebean.save(user);
 		return user;
 	}

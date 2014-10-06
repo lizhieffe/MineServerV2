@@ -7,6 +7,7 @@ import models.User;
 import com.avaje.ebean.Ebean;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 
+import play.Logger;
 import play.mvc.Controller;
 import play.mvc.Result;
 import utils.ServiceResponseTemplate;
@@ -53,7 +54,13 @@ public class cUser extends Controller {
 		if (null == user)
 			return ok(ServiceResponseTemplate.generateFailedSerciveResponseTemplate(1, null, "username doesn't exist"));
 		
-		if (!password.equals(user.credential.password))
+//		Logger.debug("=======================================");
+//		Logger.debug(user.toString());
+//		Logger.debug(user.credential.password);
+//		Logger.debug(String.valueOf(user.credential.id));
+
+		
+		if (!password.equalsIgnoreCase(user.password))
 			return ok(ServiceResponseTemplate.generateFailedSerciveResponseTemplate(1, null, "username and password don't match"));
 		
 		Session session = Session.createSession(user);

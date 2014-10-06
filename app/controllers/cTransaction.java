@@ -13,16 +13,16 @@ import utils.ServiceResponseTemplate;
 
 public class cTransaction extends Controller {
 	
-	public static Result addTransaction(Long timestamp, Double price, String token) {
+	public static Result addTransaction(String timestamp, String price, String token) {
 		
-		if (timestamp == null || price == null || price == 0 || null == token || token.length() == 0)
+		if (timestamp == null || timestamp.length() == 0 || price == null || price.length() == 0 || null == token || token.length() == 0)
 			return ok(ServiceResponseTemplate.generateFailedSerciveResponseTemplate(1, null, "Invalid parameter"));
 		
 		User user = Session.getUserByToken(token);
 		if (null == user)
 			return ok(ServiceResponseTemplate.generateFailedSerciveResponseTemplate(1, null, "Invalid token"));
 
-		Transaction transaction = Transaction.createTransaction(timestamp, price, user);
+		Transaction transaction = Transaction.createTransaction(Long.parseLong(timestamp), Double.parseDouble(price), user);
 		
 		ObjectNode response = ServiceResponseTemplate.generateSuccessfulSerciveResponseTemplate();
 		((ObjectNode)response.get("response")).put("is_success", true);
