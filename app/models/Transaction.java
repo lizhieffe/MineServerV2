@@ -40,6 +40,11 @@ public class Transaction extends Model {
 		return transaction;
 	}
 	
+	public static void deleteTransaction(Long id) {
+		Transaction transaction = Ebean.find(Transaction.class, id);
+		Ebean.delete(transaction);
+	}
+	
 	public static List<Transaction> getAllTransaction(User user) {
 		List<Transaction> list = Ebean.find(Transaction.class).where().eq("user_id", user.id).findList();
 		return list;
