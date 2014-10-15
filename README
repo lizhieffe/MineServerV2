@@ -1,4 +1,4 @@
-This is your new Play application
+Mine Server
 =================================
 
-This file will be packaged with your application, when using `activator dist`.
+This is the server for Mine Platform, which provides a mobile solution for individual users to record and manage their money in a organized way.
